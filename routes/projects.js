@@ -3,6 +3,7 @@ const routes = express.Router();
 const projectsDb = require('../handlers/projectHandlers');
 
 const urlProjects = '/api/projects';
+const urlProjectsById = '/api/project/:id';
 
 routes.use(express.json());
 
@@ -14,21 +15,46 @@ ADD A PROJECT
 'completed': boolean
 */
 routes.post(urlProjects, (req, res) => {
-    const entry = req.body;
-    if (entry.name && entry.description) {
+  const entry = req.body;
+  if (entry.name && entry.description) {
     projectsDb
-        .addProject(entry)
-        .then(id => {
-          res.status(201).json(id);
-        })
-        .catch(err => {
-          res.status(500).json({ message: 'the project could not be added' });
-        });
-    } else {
-      res
-        .status(404)
-        .json({ message: 'please include a name, description, and completed field with your project' });
-    }
-  });
+      .addProject(entry)
+      .then(id => {
+        res.status(201).json(id);
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'the project could not be added' });
+      });
+  } else {
+    res
+      .status(404)
+      .json({
+        message:
+          'please include a name, description, and completed field with your project',
+      });
+  }
+});
+
+/*
+  GET PROJECT BY ID
+  [GET] include a valid project id in the params
+  */
+routes.get(urlProjectsById, (req, res) => {
+  const { id } = req.params;
+  projectsDb
+    .getProjectById(id)
+    .then(project => {
+      if (project) {
+        res.status(200).json(project);
+      } else {
+        res
+          .status(404)
+          .json({ message: 'no project exists with the provided id' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'the project could not  be retrieved' });
+    });
+});
 
 module.exports = routes;
