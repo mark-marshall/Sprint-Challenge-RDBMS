@@ -11,6 +11,7 @@ function getProjectById(id) {
     .where({ id })
     .then(project => {
         return db('actions')
+        .select('actions.id', 'actions.description', 'actions.notes', 'actions.completed')
         .where({ project_id: id })
         .then(actions => {
             project[0].actions = actions;
