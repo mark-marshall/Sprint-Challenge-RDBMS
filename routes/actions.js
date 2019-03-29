@@ -96,6 +96,42 @@ routes.get(urlActionsById, (req, res) => {
 });
 
 /*
+UPDATE ACTION
+[PUT] include a valid action id in the params and a body with an update to one of:
+'description': 'string up to  256 chars',
+'notes': 'string',
+'completed': boolean,
+'project_id': integer of existing project already in the database
+*/
+routes.put(urlActionsById, (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+    if (updates.description || updates.notes || updates.completed || updates.project_id) {
+      actionsDb
+        .updateAction(id, updates)
+        .then(count => {
+          if (count) {
+            res.status(200).json({ message: `${count} record(s) updates` });
+          } else {
+            res
+              .status(404)
+              .json({ message: 'no action exists with the provided id' });
+          }
+        })
+        .catch(err => {
+          res.status(500).json({ message: 'the action could not be updated' });
+        });
+    } else {
+      res
+        .status(404)
+        .json({
+          message:
+            'please include a description, notes, completed field, and valid project_id with your action update',
+        });
+    }
+  });
+
+/*
   DELETE ACTION
   [DELETE] include a valid action id in the params
   */

@@ -11,13 +11,19 @@ function getActionById(id) {
 }
 
 function deleteAction(id) {
-    return db('actions')
+  return db('actions')
     .where({ id })
     .del();
 }
 
 function getActions() {
-    return db('actions');
+  return db('actions');
+}
+
+function updateAction(id, changes) {
+  return db('actions')
+    .where({ id })
+    .update(changes);
 }
 
 module.exports = {
@@ -25,4 +31,5 @@ module.exports = {
   getActionById,
   deleteAction,
   getActions,
+  updateAction,
 };

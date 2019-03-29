@@ -30,9 +30,16 @@ function getProjects() {
     return db('projects');
 }
 
+function updateProject(id, changes) {
+    return db('projects')
+    .where({ id })
+    .update(changes);
+}
+
   module.exports = {
     addProject,
     getProjectById,
     deleteProject,
     getProjects,
+    updateProject,
   };
