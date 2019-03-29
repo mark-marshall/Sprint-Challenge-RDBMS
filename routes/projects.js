@@ -20,19 +20,37 @@ routes.post(urlProjects, (req, res) => {
     projectsDb
       .addProject(entry)
       .then(id => {
-        res.status(201).json(id);
+        const newId = id[0];
+        returnProject(newId);
       })
       .catch(err => {
         res.status(500).json({ message: 'the project could not be added' });
       });
   } else {
-    res
-      .status(404)
-      .json({
-        message:
-          'please include a name, description, and completed field with your project',
-      });
+    res.status(404).json({
+      message:
+        'please include a name, description, and completed field with your project',
+    });
   }
+
+  const returnProject = id => {
+    projectsDb
+      .getProjectById(id)
+      .then(project => {
+        if (project) {
+          res.status(200).json(project);
+        } else {
+          res
+            .status(404)
+            .json({ message: 'no project exists with the provided id' });
+        }
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ message: 'the project could not  be retrieved' });
+      });
+  };
 });
 
 /*
