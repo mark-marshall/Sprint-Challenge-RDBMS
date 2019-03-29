@@ -21,7 +21,8 @@ routes.post(urlActions, (req, res) => {
     actionsDb
       .addAction(entry)
       .then(id => {
-        res.status(201).json(id);
+        const newId = id[0];
+        returnAction(newId);
       })
       .catch(err => {
         res.status(500).json({ message: 'the project could not be added' });
@@ -32,6 +33,23 @@ routes.post(urlActions, (req, res) => {
         'please include a description, notes, completed field, and valid project_id with your action',
     });
   }
+
+  const returnAction = id => {
+    actionsDb
+      .getActionById(id)
+      .then(action => {
+        if (action) {
+          res.status(200).json(action);
+        } else {
+          res
+            .status(404)
+            .json({ message: 'no action exists with the provided id' });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'the action could not  be retrieved' });
+      });
+  };
 });
 
 /*
