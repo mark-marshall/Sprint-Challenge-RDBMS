@@ -75,4 +75,26 @@ routes.get(urlProjectsById, (req, res) => {
     });
 });
 
+/*
+  DELETE PROJECT
+  [DELETE] include a valid project id in the params
+  */
+routes.delete(urlProjectsById, (req, res) => {
+  const { id } = req.params;
+  projectsDb
+    .deleteProject(id)
+    .then(count => {
+      if (count) {
+        res.status(200).json({ message: `${count} project(s) deleted` });
+      } else {
+        res
+          .status(404)
+          .json({ message: 'no project exists with the provided id' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'the project could not  be deleted' });
+    });
+});
+
 module.exports = routes;

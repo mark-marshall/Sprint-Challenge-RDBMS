@@ -20,7 +20,14 @@ function getProjectById(id) {
     })
 }
 
+function deleteProject(id) {
+    return db('projects')
+    .where({ id })
+    .del();
+}
+
   module.exports = {
     addProject,
     getProjectById,
+    deleteProject,
   };

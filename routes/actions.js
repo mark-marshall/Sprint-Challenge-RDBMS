@@ -74,4 +74,26 @@ routes.get(urlActionsById, (req, res) => {
     });
 });
 
+/*
+  DELETE ACTION
+  [DELETE] include a valid action id in the params
+  */
+ routes.delete(urlActionsById, (req, res) => {
+    const { id } = req.params;
+    actionsDb
+      .deleteAction(id)
+      .then(count => {
+        if (count) {
+          res.status(200).json({ message: `${count} action(s) deleted` });
+        } else {
+          res
+            .status(404)
+            .json({ message: 'no action exists with the provided id' });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'the action could not  be deleted' });
+      });
+  });
+
 module.exports = routes;

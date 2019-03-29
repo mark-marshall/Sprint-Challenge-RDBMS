@@ -10,7 +10,14 @@ function getActionById(id) {
   return db('actions').where({ id });
 }
 
+function deleteAction(id) {
+    return db('actions')
+    .where({ id })
+    .del();
+}
+
 module.exports = {
   addAction,
   getActionById,
+  deleteAction,
 };
