@@ -14,8 +14,7 @@
     "seedactions": "knex seed:make 02-actions",
     "runseedprojects": "knex seed:run 01-projects",
     "runseedactions": "knex seed:run 02-actions",
-    "rollback": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "rollback": "knex migrate:rollback"
   },
   "repository": {
     "type": "git",
