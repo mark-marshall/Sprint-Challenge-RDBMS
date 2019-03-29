@@ -52,6 +52,27 @@ routes.post(urlActions, (req, res) => {
   };
 });
 
+/* 
+GET ALL ACTIONS
+[GET] no params or body required
+*/
+routes.get(urlActions, (req, res) => {
+    actionsDb
+    .getActions()
+    .then(actions => {
+        if(actions.length > 0){
+            res.status(200).json(actions)
+        } else {
+            res.status(200).json({ message: 'there are no actions in the list yet' })
+        }
+    })
+    .catch(err => {
+        res
+          .status(500)
+          .json({ message: 'the actions could not  be retrieved' });
+      });
+})
+
 /*
   GET ACTION BY ID
   [GET] include a valid action id in the params

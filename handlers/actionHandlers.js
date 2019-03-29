@@ -16,8 +16,13 @@ function deleteAction(id) {
     .del();
 }
 
+function getActions() {
+    return db('actions');
+}
+
 module.exports = {
   addAction,
   getActionById,
   deleteAction,
+  getActions,
 };

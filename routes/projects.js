@@ -53,6 +53,27 @@ routes.post(urlProjects, (req, res) => {
   };
 });
 
+/* 
+GET ALL PROJECTS
+[GET] no params or body required
+*/
+routes.get(urlProjects, (req, res) => {
+    projectsDb
+    .getProjects()
+    .then(projects => {
+        if(projects.length > 0){
+            res.status(200).json(projects)
+        } else {
+            res.status(200).json({ message: 'there are no projects in the list yet' })
+        }
+    })
+    .catch(err => {
+        res
+          .status(500)
+          .json({ message: 'the projects could not  be retrieved' });
+      });
+})
+
 /*
   GET PROJECT BY ID
   [GET] include a valid project id in the params

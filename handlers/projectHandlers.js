@@ -26,8 +26,13 @@ function deleteProject(id) {
     .del();
 }
 
+function getProjects() {
+    return db('projects');
+}
+
   module.exports = {
     addProject,
     getProjectById,
     deleteProject,
+    getProjects,
   };
