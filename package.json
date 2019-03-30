@@ -1,0 +1,38 @@
+{
+  "name": "sprint-challenge-rdbms",
+  "version": "1.0.0",
+  "description": "This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server":  "nodemon index.js",
+    "initdb": "knex init",
+    "projectstable": "knex migrate:make createProjectsTable",
+    "actionstable": "knex migrate:make createActionsTable",
+    "migrate": "knex migrate:latest",
+    "seedprojects": "knex seed:make 01-projects",
+    "seedactions": "knex seed:make 02-actions",
+    "runseedprojects": "knex seed:run 01-projects",
+    "runseedactions": "knex seed:run 02-actions",
+    "rollback": "knex migrate:rollback"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mark-marshall/Sprint-Challenge-RDBMS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mark-marshall/Sprint-Challenge-RDBMS/issues"
+  },
+  "homepage": "https://github.com/mark-marshall/Sprint-Challenge-RDBMS#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "knex": "^0.16.3",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
